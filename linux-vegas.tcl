@@ -1,6 +1,21 @@
 #Create a simulator object
 set ns [new Simulator]
 
+#Open the NAM trace file
+set nf [open out.nam w]
+$ns namtrace-all $nf
+
+#Define a 'finish' procedure
+proc finish {} {
+        global ns nf
+        $ns flush-trace
+        #Close the NAM trace file
+        close $nf
+        #Execute NAM on the trace file
+        exec nam out.nam &
+        exit 0
+}
+
 #Create a bottleneck link.
 set router_snd [$ns node]
 set router_rcv [$ns node]
@@ -54,7 +69,10 @@ $ns at 6 "$tcp(3) get_ca_param vegas alpha"
 $ns at 6 "$tcp(3) get_ca_param vegas beta"
 
 #Schedule the stop of the simulation
-$ns at 11 "exit 0"
+$ns at 11 "finish"
+
+#Give node position (for NAM)
+$ns duplex-link-op $router_rcv $router_snd orient right
 
 
 #Start the simulation
