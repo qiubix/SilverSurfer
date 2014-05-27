@@ -31,7 +31,7 @@ $ns duplex-link $n0 $n1 2Mb 10ms DropTail
 #$ns queue-limit $n2 $n3 10
 
 #Give node position (for NAM)
-$ns duplex-link-op $n0 $n1 orient right-down
+$ns duplex-link-op $n0 $n1 orient right
 
 #Monitor the queue for link (n2-n3). (for NAM)
 #$ns duplex-link-op $n2 $n3 queuePos 0.5
