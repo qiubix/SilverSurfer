@@ -19,6 +19,13 @@ proc finish {} {
 #Create a bottleneck link.
 set router_snd [$ns node]
 set router_rcv [$ns node]
+# set bs1 [$ns node]
+# set bs2 [$ns node]
+# set bs3 [$ns node]
+# set br1 [$ns node]
+# set br2 [$ns node]
+# set br3 [$ns node]
+
 $ns duplex-link $router_snd $router_rcv 10Mb 10ms DropTail
 $ns queue-limit $router_snd $router_rcv 10000
 # Create two flows sharing the bottleneck link
@@ -26,8 +33,10 @@ for {set i 1} {$i <=3} {incr i 1} {
   #Create the sending nodes,the receiving nodes.
   set bs($i) [$ns node]
   $ns duplex-link $bs($i) $router_snd 100Mb 1ms DropTail
+	$ns duplex-link-op $bs($i) $router_snd orient right-down
   set br($i) [$ns node]
   $ns duplex-link $router_rcv $br($i) 100Mb 1ms DropTail
+	$ns duplex-link-op $router_rcv $br($i) orient right-down
   #setup sender side
   set tcp($i) [new Agent/TCP/Linux]
   $tcp($i) set timestamps_ true
@@ -72,7 +81,13 @@ $ns at 6 "$tcp(3) get_ca_param vegas beta"
 $ns at 11 "finish"
 
 #Give node position (for NAM)
-$ns duplex-link-op $router_rcv $router_snd orient right
+$ns duplex-link-op $router_snd $router_rcv orient right
+# $ns duplex-link-op $bs1 $router_snd orient right-up
+# $ns duplex-link-op $bs2 $router_snd orient right
+# $ns duplex-link-op $bs3 $router_snd orient right-down
+# $ns duplex-link-op $router_rcv $br1 orient right-up
+# $ns duplex-link-op $router_rcv $br2 orient right
+# $ns duplex-link-op $router_rcv $br3 orient right-down
 
 
 #Start the simulation
