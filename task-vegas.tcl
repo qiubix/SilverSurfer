@@ -27,9 +27,9 @@ set n2 [$ns node]
 set n3 [$ns node]
 
 #Create links between the nodes
-$ns duplex-link $n0 $n1 2mb 10ms DropTail
-$ns duplex-link $n1 $n2 2mb 10ms DropTail
-$ns duplex-link $n2 $n3 2mb 10ms DropTail
+$ns duplex-link $n0 $n1 1000mb 1ms DropTail
+$ns duplex-link $n1 $n2 100mb 200ms DropTail
+$ns duplex-link $n2 $n3 1000mb 1ms DropTail
 
 #Give node position (for NAM)
 $ns duplex-link-op $n0 $n1 orient right
@@ -50,15 +50,15 @@ set cbr [new Application/Traffic/CBR]
 $cbr attach-agent $tcp
 $cbr set type_ CBR
 $cbr set packet_size_ 1000
-$cbr set rate_ 1mb
+$cbr set rate_ 100mb
 $cbr set random_ false
 
 #Schedule events for the CBR and FTP agents
-$ns at 0.1 "$cbr start"
-$ns at 4.5 "$cbr stop"
+$ns at 0 "$cbr start"
+$ns at 10 "$cbr stop"
 
 #Call the finish procedure after 5 seconds of simulation time
-$ns at 5.0 "finish"
+$ns at 11 "finish"
 
 
 #Run the simulation
