@@ -23,19 +23,25 @@ proc finish {} {
 #Create nodes
 set n0 [$ns node]
 set n1 [$ns node]
+set n2 [$ns node]
+set n3 [$ns node]
 
 #Create links between the nodes
 $ns duplex-link $n0 $n1 2mb 10ms DropTail
+$ns duplex-link $n1 $n2 2mb 10ms DropTail
+$ns duplex-link $n2 $n3 2mb 10ms DropTail
 
 #Give node position (for NAM)
 $ns duplex-link-op $n0 $n1 orient right
+$ns duplex-link-op $n1 $n2 orient right
+$ns duplex-link-op $n2 $n3 orient right
 
 #Setup a TCP connection
 set tcp [new Agent/TCP]
 $tcp set class_ 2
 $ns attach-agent $n0 $tcp
 set sink [new Agent/TCPSink]
-$ns attach-agent $n1 $sink
+$ns attach-agent $n3 $sink
 $ns connect $tcp $sink
 $tcp set fid_ 1
 
