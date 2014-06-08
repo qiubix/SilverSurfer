@@ -37,9 +37,11 @@ $ns duplex-link-op $n1 $n2 orient right
 $ns duplex-link-op $n2 $n3 orient right
 
 #Setup a TCP connection
-set tcp [new Agent/TCP]
+set tcp [new Agent/TCP/Linux]
 $tcp set class_ 2
 $tcp set window_ 1000
+$tcp set timestamps_ true
+$ns at 0 "$tcp select_ca vegas"
 $ns attach-agent $n0 $tcp
 set sink [new Agent/TCPSink]
 $ns attach-agent $n3 $sink
@@ -58,7 +60,22 @@ $cbr set random_ false
 $ns at 0 "$cbr start"
 $ns at 10 "$cbr stop"
 
-#Call the finish procedure after 5 seconds of simulation time
+#change default parameters, all TCP/Linux will see the changes!
+$ns at 3 "$tcp set_ca_default_param vegas alpha 40"
+$ns at 3 "$tcp set_ca_default_param vegas beta 40"
+# confirm the changes by printing the parameter values (optional)
+$ns at 3 "$tcp get_ca_default_param vegas alpha"
+$ns at 3 "$tcp get_ca_default_param vegas beta"
+
+
+# change local parameters, only tcp(3) is affected. (optional)
+$ns at 6 "$tcp set_ca_param vegas alpha 20"
+$ns at 6 "$tcp set_ca_param vegas beta 20"
+# confirm the changes by printing the parameter values (optional)
+$ns at 6 "$tcp get_ca_param vegas alpha"
+$ns at 6 "$tcp get_ca_param vegas beta"
+
+#Call the finish procedure after 11 seconds of simulation time
 $ns at 11 "finish"
 
 
