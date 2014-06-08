@@ -62,7 +62,7 @@ proc finish {} {
    global ns nf f
    close $f
    close $nf
-   exec  ns-allinone-2.35/xgraph/xgraph -x time -y bandwith tcp.tr -geometry 800x400 &
+   exec xgraph -x time -y bandwith tcp.tr -geometry 800x400 &
    exec nam out.nam &
    exit 0
 }
