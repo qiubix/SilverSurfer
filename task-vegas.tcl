@@ -39,6 +39,7 @@ $ns duplex-link-op $n2 $n3 orient right
 #Setup a TCP connection
 set tcp [new Agent/TCP]
 $tcp set class_ 2
+$tcp set window_ 1000
 $ns attach-agent $n0 $tcp
 set sink [new Agent/TCPSink]
 $ns attach-agent $n3 $sink
