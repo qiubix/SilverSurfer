@@ -99,14 +99,32 @@ $ns at 0 "record"
 # $ns at 0 "$cbr start"
 # $ns at 10 "$cbr stop"
 $ns at 0 "$ftp start"
-$ns at 10 "$ftp stop"
+$ns at 20 "$ftp stop"
  
 #change default parameters, all TCP/Linux will see the changes!
 $ns at 5 "$tcp set_ca_default_param vegas alpha 40"
 $ns at 5 "$tcp set_ca_default_param vegas beta 40"
+# confirm the changes by printing the parameter values (optional)
+$ns at 5 "$tcp get_ca_default_param vegas alpha"
+$ns at 5 "$tcp get_ca_default_param vegas beta"
+
+
+# change local parameters, only tcp(3) is affected. (optional)
+$ns at 10 "$tcp set_ca_param vegas alpha 20"
+$ns at 10 "$tcp set_ca_param vegas beta 20"
+# confirm the changes by printing the parameter values (optional)
+$ns at 10 "$tcp get_ca_param vegas alpha"
+$ns at 10 "$tcp get_ca_param vegas beta"
+
+# change local parameters, only tcp(3) is affected. (optional)
+$ns at 15 "$tcp set_ca_param vegas alpha 10"
+$ns at 15 "$tcp set_ca_param vegas beta 10"
+# confirm the changes by printing the parameter values (optional)
+$ns at 15 "$tcp get_ca_param vegas alpha"
+$ns at 15 "$tcp get_ca_param vegas beta"
 
 #Call the finish procedure after 11 seconds of simulation time
-$ns at 11 "finish"
+$ns at 21 "finish"
 
 #Run the simulation
 $ns run
