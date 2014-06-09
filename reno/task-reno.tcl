@@ -49,17 +49,17 @@ set sink [new Agent/TCPSink/Sack1]
 	$ns connect $tcp $sink
 
 # Set up a CBR over TCP connection
-set cbr [new Application/Traffic/CBR]
-	$cbr attach-agent $tcp
-	$cbr set type_ CBR
-	$cbr set packet_size_ 1000
-	$cbr set rate_ 100mb
-	$cbr set random_ false
+# set cbr [new Application/Traffic/CBR]
+# 	$cbr attach-agent $tcp
+# 	$cbr set type_ CBR
+# 	$cbr set packet_size_ 1000
+# 	$cbr set rate_ 100mb
+# 	$cbr set random_ false
 
 # Set up a FTP over TCP connection
-# set ftp [new Application/FTP]
-# $ftp attach-agent $tcp
-# $ftp set type_ FTP
+set ftp [new Application/FTP]
+$ftp attach-agent $tcp
+$ftp set type_ FTP
 
 # =========== DEFINE PROCEDURES =========== 
 
@@ -95,11 +95,13 @@ proc finish {} {
 # =========== SCHEDULE SIMULATION =========== 
 #Schedule events for the CBR and FTP agents
 $ns at 0 "record"
-$ns at 0 "$cbr start"
-$ns at 10 "$cbr stop"
-
+# $ns at 0 "$cbr start"
+# $ns at 10 "$cbr stop"
+$ns at 0 "$ftp start"
+$ns at 20 "$ftp stop"
+ 
 #Call the finish procedure after 11 seconds of simulation time
-$ns at 11 "finish"
+$ns at 21 "finish"
 
 #Run the simulation
 $ns run
