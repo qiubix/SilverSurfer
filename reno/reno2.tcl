@@ -31,12 +31,12 @@ $ns duplex-link-op $n2 $n3 orient right
 
 # ========== Setup a TCP connection ========== 
 # Set up TCP transmitter
-set tcp [new Agent/TCP/Newreno]
+set tcp [new Agent/TCP/Linux]
 	$tcp set class_ 2
 	$tcp set window_ 1000000
 	$tcp set windowOption_ 8
 	$tcp set timestamps_ true
-	#$ns at 0 "$tcp select_ca Newreno"
+	$ns at 0 "$tcp select_ca reno"
 	$ns attach-agent $n0 $tcp
 
 # Set up TCP receiver
